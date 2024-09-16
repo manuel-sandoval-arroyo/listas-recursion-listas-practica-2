@@ -23,7 +23,7 @@ indice :: [a] -> Int -> a
 indice [] _ = error "Indice fuera de rango"
 indice (x : xs) 0 = x
 indice (x : xs) n =
-    if n >= 0 && n < longitud xs then indice xs (n-1)
+    if n >= 0 && n <= longitud xs then indice xs (n-1)
     else error "Indice fuera de rango"
 
 
