@@ -9,28 +9,29 @@ sumaLista [] = 0
 sumaLista (x : xs) = x + sumaLista xs
 
 agregaElemento :: [a] -> a -> Bool -> [a]
-agregaElemento [] a cabeza = [a]
 agregaElemento xs a cabeza = 
     if cabeza then a : xs 
     else xs ++ [a]
 
 maximoLista :: (Num a, Ord a) => [a] -> a
-maximoLista [] = 0
+maximoLista [] = error "Lista vacía"
 maximoLista [x] = x
-maximoLista (x : xs) = max x (maximoLista xs)
+maximoLista (x : xs) = 
+    if x > maximoLista xs 
+        then x 
+        else maximoLista xs
 
 indice :: [a] -> Int -> a
-indice [] _ = error "Indice fuera de rango"
-indice (x : xs) 0 = x
+indice [] n = error "Indice fuera de rango"
 indice (x : xs) n =
-    if n >= 0 && n <= longitud xs then indice xs (n-1)
-    else error "Indice fuera de rango"
+    if n < 0 then error "Indice fuera de rango"
+    else if n == 0 then x
+    else indice xs (n - 1)
 
 
 --------------- Listas por comprehensión ---------------
 
 divisores :: Int -> [Int]
-divisores 0 = []
 divisores n = [x | x <- [1..n], n `mod` x == 0]
 
 conjunto :: Eq a => [a] -> [a]
@@ -38,5 +39,4 @@ conjunto [] = []
 conjunto (x : xs) = x : conjunto [y | y <- xs, y /= x]
 
 numerosPares :: [Int] -> [Int]
-numerosPares [] = []
 numerosPares xs = [x | x <- xs, x `mod` 2 == 0]
